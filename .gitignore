@@ -8,3 +8,5 @@ node-be/.env
 
 # Python ignore
 py-be/.env
+**/*/.deepeval-cache.json
+**/*/__pycache__/
