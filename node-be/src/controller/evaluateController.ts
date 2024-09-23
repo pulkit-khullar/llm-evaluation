@@ -11,7 +11,7 @@ export const evaluateBot = async (req: Request, res: Response) => {
     console.log(metrics)
 
     try {
-        const response = await axios.post('http://localhost:8001/api/evaluate', {
+        const response = await axios.post(`http://${process.env.PY_PROJECT_HOST}/api/evaluate`, {
             conversationHistory,
             userQuestion,
             botAnswer,

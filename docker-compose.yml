@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  node-app:
+    build:
+      context: node-be
+      dockerfile: dockerfile
+    ports:
+      - "8003:8003"
+    depends_on:
+      - fastapi-app
+
+  fastapi-app:
+    build:
+      context: py-be
+      dockerfile: dockerfile
+    ports:
+      - "8004:8004"
