@@ -4,6 +4,7 @@ import uvicorn
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
+from metrics import answerRelevance
 
 load_dotenv()
 
@@ -33,22 +34,16 @@ async def evaluate(request: EvaluationRequest):
     evaluation_results = {}
 
     if 'answer_relevance' in metrics:
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            temperature=0,
-            messages=[
-                {"role": "system", "content": "Evaluate the relevance of this bot response."},
-                {"role": "user", "content": user_question},
-                {"role": "assistant", "content": bot_answer},
-            ]
+        result = answerRelevance.AnswerRelevancy(
+            user_input=user_question, 
+            bot_output=bot_answer, 
+            llm_context=None, 
+            chat_history=conversation_history
         )
-        evaluation_results['answer_relevance'] = response
-
-    # # Log results to MLflow
-    # with mlflow.start_run() as run:
-    #     for metric, score in evaluation_results.items():
-    #         mlflow.log_metric(metric, float(score))
-
+        
+        evaluation_results['score'] = result.score
+        evaluation_results['reson'] = result.reason
+        
     return evaluation_results
 
 if __name__=="__main__":
