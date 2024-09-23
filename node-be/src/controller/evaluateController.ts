@@ -4,8 +4,13 @@ import { Request, Response } from "express";
 export const evaluateBot = async (req: Request, res: Response) => {
     const { conversationHistory, userQuestion, botAnswer, metrics } = req.body;
 
+    console.log(conversationHistory)
+    console.log(userQuestion)
+    console.log(botAnswer)
+    console.log(metrics)
+
     try {
-        const response = await axios.post('http://localhost:8001/evaluate', {
+        const response = await axios.post('http://localhost:8001/api/evaluate', {
             conversationHistory,
             userQuestion,
             botAnswer,

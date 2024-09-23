@@ -8,6 +8,8 @@ dotenv.config();
 const app: Express = express();
 const port: number = parseInt(process.env.PORT || '8000', 10);
 
+app.use(express.json())
+
 // Single router for entire application
 app.use('/api', router)
 

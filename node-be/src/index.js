@@ -10,6 +10,7 @@ const router_1 = __importDefault(require("./router/router"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const port = parseInt(process.env.PORT || '8000', 10);
+app.use(express_1.default.json());
 // Single router for entire application
 app.use('/api', router_1.default);
 app.listen(port, () => {
