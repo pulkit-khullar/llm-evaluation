@@ -1,0 +1,28 @@
+{
+  "name": "llm-evaluation-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "cross-env ts-node ./src/index.ts"
+  },
+  "keywords": [
+    "LLM",
+    "LLM Evaluation",
+    "OpenAI",
+    "AI"
+  ],
+  "author": "Pulkit Khullar (https://github.com/pulkit-khullar)",
+  "license": "ISC",
+  "description": "NodeJs backend for evaulating the LLM data provided by the user. The application act as a primary backend for handling communication between WebApp and Python based LLM microservice",
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  }
+}

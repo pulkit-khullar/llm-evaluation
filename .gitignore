@@ -1,1 +1,7 @@
+# WebApp ignore
 react-fe/node_modules
+react-fe/.env
+
+# NodeJs ignore
+node-be/node_modules
+node-be/.env
