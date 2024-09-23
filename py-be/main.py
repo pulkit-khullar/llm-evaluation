@@ -23,7 +23,7 @@ class EvaluationRequest(BaseModel):
     userQuestion: str
     botAnswer: str
     contextList: list[str]
-    metrics: list[str]
+    metrics: str
 
 @app.post('/api/evaluate')
 async def evaluate(request: EvaluationRequest):
@@ -35,7 +35,7 @@ async def evaluate(request: EvaluationRequest):
 
     evaluation_results = {}
 
-    if 'answer_relevance' in metrics:
+    if 'answer_relevance' == metrics:
         result = answerRelevance.AnswerRelevancy(
             user_input=user_question, 
             bot_output=bot_answer, 
@@ -46,7 +46,7 @@ async def evaluate(request: EvaluationRequest):
         evaluation_results['score'] = result.score
         evaluation_results['reson'] = result.reason
     
-    if 'bias' in metrics:
+    if 'bias' == metrics:
         result = summarization.Summarization(
             user_input=user_question, 
             bot_output=bot_answer, 
@@ -57,7 +57,7 @@ async def evaluate(request: EvaluationRequest):
         evaluation_results['score'] = result.score
         evaluation_results['reson'] = result.reason
         
-    if 'contextual_relevalcy' in metrics:
+    if 'contextual_relevancy' == metrics:
         result = summarization.Summarization(
             user_input=user_question, 
             bot_output=bot_answer, 
@@ -68,7 +68,7 @@ async def evaluate(request: EvaluationRequest):
         evaluation_results['score'] = result.score
         evaluation_results['reson'] = result.reason
         
-    if 'faithfulness' in metrics:
+    if 'faithfulness' == metrics:
         result = summarization.Summarization(
             user_input=user_question, 
             bot_output=bot_answer, 
@@ -79,7 +79,7 @@ async def evaluate(request: EvaluationRequest):
         evaluation_results['score'] = result.score
         evaluation_results['reson'] = result.reason
         
-    if 'hallucination' in metrics:
+    if 'hallucination' == metrics:
         result = summarization.Summarization(
             user_input=user_question, 
             bot_output=bot_answer, 
@@ -90,7 +90,7 @@ async def evaluate(request: EvaluationRequest):
         evaluation_results['score'] = result.score
         evaluation_results['reson'] = result.reason
         
-    if 'summarization' in metrics:
+    if 'summarization' == metrics:
         result = summarization.Summarization(
             user_input=user_question, 
             bot_output=bot_answer, 

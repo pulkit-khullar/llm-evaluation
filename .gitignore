@@ -5,6 +5,7 @@ react-fe/.env
 # NodeJs ignore
 node-be/node_modules
 node-be/.env
+node-be/**/*.js
 
 # Python ignore
 py-be/.env
