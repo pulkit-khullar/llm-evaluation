@@ -4,7 +4,7 @@ import uvicorn
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
-from metrics import answerRelevance
+from metrics import answerRelevance, summarization
 
 load_dotenv()
 
@@ -22,6 +22,7 @@ class EvaluationRequest(BaseModel):
     conversationHistory: list[str]
     userQuestion: str
     botAnswer: str
+    contextList: list[str]
     metrics: list[str]
 
 @app.post('/api/evaluate')
@@ -29,6 +30,7 @@ async def evaluate(request: EvaluationRequest):
     conversation_history = request.conversationHistory
     user_question = request.userQuestion
     bot_answer = request.botAnswer
+    context = request.contextList
     metrics = request.metrics
 
     evaluation_results = {}
@@ -37,7 +39,62 @@ async def evaluate(request: EvaluationRequest):
         result = answerRelevance.AnswerRelevancy(
             user_input=user_question, 
             bot_output=bot_answer, 
-            llm_context=None, 
+            llm_context=context, 
+            chat_history=conversation_history
+        )
+        
+        evaluation_results['score'] = result.score
+        evaluation_results['reson'] = result.reason
+    
+    if 'bias' in metrics:
+        result = summarization.Summarization(
+            user_input=user_question, 
+            bot_output=bot_answer, 
+            llm_context=context, 
+            chat_history=conversation_history
+        )
+        
+        evaluation_results['score'] = result.score
+        evaluation_results['reson'] = result.reason
+        
+    if 'contextual_relevalcy' in metrics:
+        result = summarization.Summarization(
+            user_input=user_question, 
+            bot_output=bot_answer, 
+            llm_context=context, 
+            chat_history=conversation_history
+        )
+        
+        evaluation_results['score'] = result.score
+        evaluation_results['reson'] = result.reason
+        
+    if 'faithfulness' in metrics:
+        result = summarization.Summarization(
+            user_input=user_question, 
+            bot_output=bot_answer, 
+            llm_context=context, 
+            chat_history=conversation_history
+        )
+        
+        evaluation_results['score'] = result.score
+        evaluation_results['reson'] = result.reason
+        
+    if 'hallucination' in metrics:
+        result = summarization.Summarization(
+            user_input=user_question, 
+            bot_output=bot_answer, 
+            llm_context=context, 
+            chat_history=conversation_history
+        )
+        
+        evaluation_results['score'] = result.score
+        evaluation_results['reson'] = result.reason
+        
+    if 'summarization' in metrics:
+        result = summarization.Summarization(
+            user_input=user_question, 
+            bot_output=bot_answer, 
+            llm_context=context, 
             chat_history=conversation_history
         )
         

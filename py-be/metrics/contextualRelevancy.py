@@ -1,9 +1,9 @@
-from deepeval.metrics import AnswerRelevancyMetric
+from deepeval.metrics import ContextualRelevancyMetric
 from deepeval.test_case import LLMTestCase
 
-def AnswerRelevancy(user_input, bot_output, llm_context, chat_history):
+def ContextualRelevancy(user_input, bot_output, llm_context, chat_history):
 
-    metric = AnswerRelevancyMetric(
+    metric = ContextualRelevancyMetric(
         threshold=0.7,
         model="gpt-4",
         include_reason=True

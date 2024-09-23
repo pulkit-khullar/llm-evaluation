@@ -15,16 +15,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.evaluateBot = void 0;
 const axios_1 = __importDefault(require("axios"));
 const evaluateBot = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { conversationHistory, userQuestion, botAnswer, metrics } = req.body;
+    const { conversationHistory, userQuestion, botAnswer, metrics, context } = req.body;
+    const contextList = context.split('\n');
     console.log(conversationHistory);
     console.log(userQuestion);
     console.log(botAnswer);
+    console.log(contextList);
     console.log(metrics);
     try {
         const response = yield axios_1.default.post('http://localhost:8001/api/evaluate', {
             conversationHistory,
             userQuestion,
             botAnswer,
+            contextList,
             metrics
         });
         const result = response.data;

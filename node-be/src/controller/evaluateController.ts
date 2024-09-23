@@ -2,11 +2,12 @@ import axios from "axios";
 import { Request, Response } from "express";
 
 export const evaluateBot = async (req: Request, res: Response) => {
-    const { conversationHistory, userQuestion, botAnswer, metrics } = req.body;
-
+    const { conversationHistory, userQuestion, botAnswer, metrics, context } = req.body;
+    const contextList = context.split('\n') as string
     console.log(conversationHistory)
     console.log(userQuestion)
     console.log(botAnswer)
+    console.log(contextList)
     console.log(metrics)
 
     try {
@@ -14,6 +15,7 @@ export const evaluateBot = async (req: Request, res: Response) => {
             conversationHistory,
             userQuestion,
             botAnswer,
+            contextList,
             metrics
         });
         

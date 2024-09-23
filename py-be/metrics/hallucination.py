@@ -1,10 +1,10 @@
-from deepeval.metrics import AnswerRelevancyMetric
+from deepeval.metrics import HallucinationMetric
 from deepeval.test_case import LLMTestCase
 
-def AnswerRelevancy(user_input, bot_output, llm_context, chat_history):
+def Hallucination(user_input, bot_output, llm_context, chat_history):
 
-    metric = AnswerRelevancyMetric(
-        threshold=0.7,
+    metric = HallucinationMetric(
+        threshold=0.5,
         model="gpt-4",
         include_reason=True
     )

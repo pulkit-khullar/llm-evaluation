@@ -5,6 +5,7 @@ const evaluationSchema = Joi.object({
     conversationHistory: Joi.array().items(Joi.string()).required(),
     userQuestion: Joi.string().required(),
     botAnswer: Joi.string().required(),
+    context: Joi.string().required(),
     metrics: Joi.array().items(Joi.string()).required()
 });
 

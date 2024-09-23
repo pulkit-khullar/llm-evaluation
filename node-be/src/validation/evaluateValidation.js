@@ -9,6 +9,7 @@ const evaluationSchema = joi_1.default.object({
     conversationHistory: joi_1.default.array().items(joi_1.default.string()).required(),
     userQuestion: joi_1.default.string().required(),
     botAnswer: joi_1.default.string().required(),
+    context: joi_1.default.string().required(),
     metrics: joi_1.default.array().items(joi_1.default.string()).required()
 });
 const validateEvaluation = (req, res, next) => {
