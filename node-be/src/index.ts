@@ -10,7 +10,11 @@ const app: Express = express();
 const port: number = parseInt(process.env.PORT || '8000', 10);
 
 app.use(express.json())
-app.use(cors({origin: "*"}))
+app.use(cors({
+    origin: '*',
+    methods: 'GET,POST,PUT,DELETE',
+    credentials: true
+  }))
 
 // Single router for entire application
 app.use('/api', router)

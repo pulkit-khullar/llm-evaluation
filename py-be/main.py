@@ -34,7 +34,7 @@ async def evaluate(request: EvaluationRequest):
     metrics = request.metrics
 
     evaluation_results = {}
-
+    
     if 'answer_relevance' in metrics:
         result = answerRelevance.AnswerRelevancy(
             user_input=user_question, 

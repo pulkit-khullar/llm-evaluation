@@ -7,7 +7,7 @@ interface Props {
 }
 
 const ScreenSplitter: React.FC<Props> = () => {
-    const [response, setResponse] = useState<string>("");
+    const [response, setResponse] = useState<object>({});
     const CallBE = (conversationHistory: string[], userQuestion: string, botAnswer: string, context: string, metrics: string[]) => {
         console.log({conversationHistory, userQuestion, botAnswer, context, metrics})
         // const raw = {
@@ -36,14 +36,14 @@ const ScreenSplitter: React.FC<Props> = () => {
 
         fetch(`http://${process.env.REACT_APP_BE_HOST}/api/evaluate`, requestOptions)
             .then((response) => response.json())
-            .then((result) => console.log(result))
-            .catch((error) => console.error("Error:", error));
+            .then((result) => setResponse(result))
+            .catch((error) => setResponse(error));
     };
 
     return <div className="w-screen flex flex-row p-2 h-full">
         <InputScreen callBE={CallBE}/>
         {/* <ButtonScreen/> */}
-        <ResultScreen />
+        <ResultScreen response={response} />
     </div>
 }
 
