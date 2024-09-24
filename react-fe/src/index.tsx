@@ -2,15 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
+import HomePage from './components/homePage';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <div>
-      <h1 className='text-red-800'>Empty React App</h1>
-    </div>
+    <HomePage />
   </React.StrictMode>
 );
 
