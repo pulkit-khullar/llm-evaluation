@@ -96,7 +96,64 @@ Note - Convert env.example to .env before procedding further.
 
 ### Node Backend
 
+```
+GET /api/health
+```
+Application health check
+
+```
+POST /api/evaluate
+
+REQUEST BODY:
+conversationHistory: Array of String
+userQuestion: String
+botAnswer: String
+context: String
+metrics: Array of String | Allowed values are - answer_relevance, bias, contextual_relevancy, faithfulness, hallucination, summarization
+
+RESPONSE BODY:
+{
+  message: "Evaluation completed successfully",
+  result: {
+    ...Metrics names and there scores along with explanation
+  }
+}
+```
+Application Evaluate end-point, This add's the first level request validation at this point.
+This also forwards the request to Python service for result evaluation.
+
 ### Python Backend
+
+```
+GET /api/health
+```
+Application health check
+
+```
+POST /api/evaluate
+
+REQUEST BODY:
+conversationHistory: Array of String
+userQuestion: String
+botAnswer: String
+context: Array of String
+metrics: Array of String
+
+RESPONSE BODY
+{
+  metric_name: {
+    score: ...result score,
+    reson: ...explanation of result score.
+  },
+  metric_name_2: {
+    score: ...result score,
+    reson: ...explanation of result score.
+  },
+  ...
+}
+```
+Application Evaluate end-point, This is responsible for processing the evaluation for the selected metrics.
+This formats the result and send the JSON object to the Node service, which then further send's the result back to React service.
 
 ## Known Issues
 - Ensure all services are running for full functionality.
