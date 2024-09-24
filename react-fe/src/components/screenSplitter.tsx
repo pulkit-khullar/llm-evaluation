@@ -8,8 +8,9 @@ interface Props {
 
 const ScreenSplitter: React.FC<Props> = () => {
     const [response, setResponse] = useState<object>({});
+    const [isLoading, setLoading] = useState<boolean>(false);
     const CallBE = (conversationHistory: string[], userQuestion: string, botAnswer: string, context: string, metrics: string[]) => {
-        console.log({conversationHistory, userQuestion, botAnswer, context, metrics})
+        console.log({ conversationHistory, userQuestion, botAnswer, context, metrics })
         // const raw = {
         //     conversationHistory: [
         //         "Olympic were hosted in Tokyo in 2020"
@@ -34,16 +35,23 @@ const ScreenSplitter: React.FC<Props> = () => {
             body: JSON.stringify(raw)
         };
 
+        setLoading(true)
+
         fetch(`http://${process.env.REACT_APP_BE_HOST}/api/evaluate`, requestOptions)
             .then((response) => response.json())
             .then((result) => setResponse(result))
-            .catch((error) => setResponse(error));
+            .catch((error) => setResponse(error))
+            .finally(() => setLoading(false));
     };
 
     return <div className="w-screen flex flex-row p-2 h-full">
-        <InputScreen callBE={CallBE}/>
+        <div className="flex-1 overflow-hidden">
+            <InputScreen callBE={CallBE} loading={isLoading}/>
+        </div>
         {/* <ButtonScreen/> */}
-        <ResultScreen response={response} />
+        <div className="flex-1 overflow-hidden">
+            <ResultScreen response={response} />
+        </div>
     </div>
 }
 

@@ -2,9 +2,10 @@ import React, { useState } from "react";
 
 interface Props {
     callBE: (conversationHistory: string[], userQuestion: string, botAnswer: string, context: string, metrics: string[]) => void;
+    loading: boolean;
 }
 
-const InputScreen: React.FC<Props> = ({ callBE }) => {
+const InputScreen: React.FC<Props> = ({ callBE, loading }) => {
     const [conversationHistory, setConversationHistory] = useState<string>("");
     const [userQuestion, setUserQuestion] = useState<string>("");
     const [botAnswer, setBotAnswer] = useState<string>("");
@@ -35,7 +36,7 @@ const InputScreen: React.FC<Props> = ({ callBE }) => {
             selectedMetrics,)
     };
 
-    return <div className="grow p-4 border-[#d8315b] border-2 rounded-lg bg-[#000] mr-4">
+    return <div className="p-4 border-[#d8315b] border-2 rounded-lg bg-[#000] mr-4">
         <div className="p-2 bg-[#1e1b18] border-[#fffaff] border-2 rounded-lg text-[#fffaff]">
             <h2 className="text-2xl font-semibold mb-2">Conversation Evaluation</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -101,8 +102,15 @@ const InputScreen: React.FC<Props> = ({ callBE }) => {
                     </div>
                 </div>
 
-                <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">
-                    Evaluate
+                <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded" disabled={loading}>
+                    {
+                        !loading ?
+                            'Evaluate' :
+                            <>
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                                Processing...
+                            </>
+                    }
                 </button>
             </form>
         </div>
