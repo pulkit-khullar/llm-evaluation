@@ -15,7 +15,7 @@ const evaluationSchema = Joi.object({
     userQuestion: Joi.string().required(),
     botAnswer: Joi.string().required(),
     context: Joi.string().required(),
-    metrics: Joi.string().valid(...Object.values(allowedMetrics)).required()
+    metrics: Joi.array().items(Joi.string().valid(...Object.values(allowedMetrics))).required()
 });
 
 export const validateEvaluation = (req: Request, res: Response, next: NextFunction) => {

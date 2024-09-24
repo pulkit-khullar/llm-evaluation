@@ -23,7 +23,7 @@ class EvaluationRequest(BaseModel):
     userQuestion: str
     botAnswer: str
     contextList: list[str]
-    metrics: str
+    metrics: list[str]
 
 @app.post('/api/evaluate')
 async def evaluate(request: EvaluationRequest):
@@ -35,71 +35,77 @@ async def evaluate(request: EvaluationRequest):
 
     evaluation_results = {}
 
-    if 'answer_relevance' == metrics:
+    if 'answer_relevance' in metrics:
         result = answerRelevance.AnswerRelevancy(
             user_input=user_question, 
             bot_output=bot_answer, 
             llm_context=context, 
             chat_history=conversation_history
         )
-        
-        evaluation_results['score'] = result.score
-        evaluation_results['reson'] = result.reason
+        evaluation_results['answer_relevance'] = {
+            'score': result.score,
+            'reason': result.reason
+        }
     
-    if 'bias' == metrics:
+    if 'bias' in metrics:
         result = summarization.Summarization(
             user_input=user_question, 
             bot_output=bot_answer, 
             llm_context=context, 
             chat_history=conversation_history
         )
-        
-        evaluation_results['score'] = result.score
-        evaluation_results['reson'] = result.reason
-        
-    if 'contextual_relevancy' == metrics:
+        evaluation_results['bias'] = {
+            'score': result.score,
+            'reason': result.reason
+        }
+    
+    if 'contextual_relevancy' in metrics:
         result = summarization.Summarization(
             user_input=user_question, 
             bot_output=bot_answer, 
             llm_context=context, 
             chat_history=conversation_history
         )
-        
-        evaluation_results['score'] = result.score
-        evaluation_results['reson'] = result.reason
-        
-    if 'faithfulness' == metrics:
+        evaluation_results['contextual_relevancy'] = {
+            'score': result.score,
+            'reason': result.reason
+        }
+
+    if 'faithfulness' in metrics:
         result = summarization.Summarization(
             user_input=user_question, 
             bot_output=bot_answer, 
             llm_context=context, 
             chat_history=conversation_history
         )
-        
-        evaluation_results['score'] = result.score
-        evaluation_results['reson'] = result.reason
-        
-    if 'hallucination' == metrics:
+        evaluation_results['faithfulness'] = {
+            'score': result.score,
+            'reason': result.reason
+        }
+
+    if 'hallucination' in metrics:
         result = summarization.Summarization(
             user_input=user_question, 
             bot_output=bot_answer, 
             llm_context=context, 
             chat_history=conversation_history
         )
-        
-        evaluation_results['score'] = result.score
-        evaluation_results['reson'] = result.reason
-        
-    if 'summarization' == metrics:
+        evaluation_results['hallucination'] = {
+            'score': result.score,
+            'reason': result.reason
+        }
+
+    if 'summarization' in metrics:
         result = summarization.Summarization(
             user_input=user_question, 
             bot_output=bot_answer, 
             llm_context=context, 
             chat_history=conversation_history
         )
-        
-        evaluation_results['score'] = result.score
-        evaluation_results['reson'] = result.reason
+        evaluation_results['summarization'] = {
+            'score': result.score,
+            'reason': result.reason
+        }
         
     return evaluation_results
 
