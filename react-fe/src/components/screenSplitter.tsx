@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import InputScreen from "./inputScreen";
 import ButtonScreen from "./buttonScreen";
 import ResultScreen from "./resultScreen";
@@ -7,6 +7,7 @@ interface Props {
 }
 
 const ScreenSplitter: React.FC<Props> = () => {
+    const [response, setResponse] = useState<string>("");
     const CallBE = (conversationHistory: string[], userQuestion: string, botAnswer: string, context: string, metrics: string[]) => {
         console.log({conversationHistory, userQuestion, botAnswer, context, metrics})
         // const raw = {
@@ -33,7 +34,7 @@ const ScreenSplitter: React.FC<Props> = () => {
             body: JSON.stringify(raw)
         };
 
-        fetch("http://localhost:8000/api/evaluate", requestOptions)
+        fetch(`http://${process.env.REACT_APP_BE_HOST}/api/evaluate`, requestOptions)
             .then((response) => response.json())
             .then((result) => console.log(result))
             .catch((error) => console.error("Error:", error));
