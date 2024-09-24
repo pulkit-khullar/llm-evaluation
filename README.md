@@ -92,6 +92,12 @@ Note - Convert env.example to .env before procedding further.
 5. **Hallucination**
 6. **Summarization**
 
+## API Doc
+
+### Node Backend
+
+### Python Backend
+
 ## Known Issues
 - Ensure all services are running for full functionality.
 - Adjust port settings in `docker-compose.yml` if conflicts arise.
